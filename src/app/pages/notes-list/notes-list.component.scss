@@ -1,0 +1,62 @@
+.main-container{
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin:auto;
+  padding-top: 50px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  text-align: center;
+  margin: 0 auto; 
+  margin-top: 50px;
+  
+}
+
+.custom-input {
+  background-color: #f0f0f0;
+  color: black; 
+  border-color: #ccc; 
+}
+
+.custom-input:focus {
+  border-color: #aaa; 
+  box-shadow: 0 0 0 0.2rem rgba(170, 170, 170, 0.25);
+}
+
+.custom-input::placeholder {
+  color: #888888;
+  text-align: left;
+  font-size: 24px;
+}
+
+.notes-list{
+  margin-top: 35px;
+  margin-bottom: 70px;
+}
+
+app-note-card{
+  margin-bottom: 25px;
+  display: block;
+}
+
+.floating-add-button{
+  position: fixed;
+  bottom: 20px; /* Adjust the value as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0px 0px 15px 5px rgba(55, 199, 242, 0.2);
+  background-color: #37c7f2;
+  height: 50px;
+  width: 500px;
+  font-size: 24px;
+  
+  
+}
