@@ -2,12 +2,12 @@
     <form #noteForm="ngForm" (ngSubmit)="onSubmit(noteForm)">
         <div class="field">
             <label class="label">Title</label>
-            <input type="text" name="title" [ngModel] =note.title required class="input">
+            <input type="text" name="title" [ngModel] =note.title required class="input" maxlength="20">
         </div>
         <br>
         <div class="field">
             <label class="label">Category</label>
-            <input type="text" name="category" [ngModel]="note.category" required class="input">
+            <input type="text" name="category" [ngModel]="note.category" required class="input" maxlength="15">
         </div>
         <br>
         <br>
