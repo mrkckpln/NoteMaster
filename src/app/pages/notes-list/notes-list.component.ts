@@ -100,18 +100,58 @@ export class NotesListComponent implements OnInit {
 
   filter(query: string) {
     query = query.toLowerCase().trim();
-    let allResults: Note[] = new Array<Note>();
-    let terms: string[] = query.split(' ');
-    terms = this.removeDuplicates(terms);
-    terms.forEach(term => {
-      let results: Note[] = this.relevantNotes(term);
-      allResults = [...allResults, ...results];
-    });
+    
+    if (!query) {
+      this.filterNotes = this.notes;
+      return;
+    }
 
-    let uniqueResults = this.removeDuplicates(allResults);
-    this.filterNotes = uniqueResults;
+    
+    const scoredNotes = this.notes.map(note => ({
+      note,
+      score: this.getMatchScore(note, query)
+    }));
 
+    
+    this.filterNotes = scoredNotes
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map(item => item.note);
   }
+
+  private getMatchScore(note: Note, query: string): number {
+    const exactMatchScore = 3;
+    const startsWithScore = 2;
+    const includesScore = 1;
+    let score = 0;
+
+    
+    if (note.title) {
+      const titleLower = note.title.toLowerCase();
+      if (titleLower === query) score = Math.max(score, exactMatchScore);
+      else if (titleLower.startsWith(query)) score = Math.max(score, startsWithScore);
+      else if (titleLower.includes(query)) score = Math.max(score, includesScore);
+    }
+
+    
+    if (note.body) {
+      const bodyLower = note.body.toLowerCase();
+      if (bodyLower === query) score = Math.max(score, exactMatchScore);
+      else if (bodyLower.startsWith(query)) score = Math.max(score, startsWithScore);
+      else if (bodyLower.includes(query)) score = Math.max(score, includesScore);
+    }
+
+    
+    if (note.category) {
+      const categoryLower = note.category.toLowerCase();
+      if (categoryLower === query) score = Math.max(score, exactMatchScore);
+      else if (categoryLower.startsWith(query)) score = Math.max(score, startsWithScore);
+      else if (categoryLower.includes(query)) score = Math.max(score, includesScore);
+    }
+
+    return score;
+  }
+
 
   removeDuplicates(arr: Array<any>): Array<any> { {
     let uniqueResults: Set<any> = new Set<any>();
